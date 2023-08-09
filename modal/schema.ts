@@ -5,6 +5,7 @@ const typeDefs = gql`
   type User {
     firstName: String
     email: String
+    password:String
   }
 
   type Query {

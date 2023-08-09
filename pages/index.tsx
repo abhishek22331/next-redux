@@ -41,9 +41,11 @@ const Home = () => {
     console.log(formData);
   };
   const query = `
-  query {
-    firstName:"amit"
-    lastName:"sudra"
+  query GetUser {
+    users {
+     firstName,
+    email
+    }
   }
 `;
   const apiCall=async()=>{
