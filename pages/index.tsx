@@ -2,12 +2,23 @@ import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment, setMatchedTenants } from "@/slices/counterSlice";
-// import store from "../store";
+import { useQuery } from '@apollo/client/react';
+import { gql } from 'graphql-tag';
+import axios from "axios";
 const Home = () => {
   const dispatch = useDispatch();
   const count = useSelector((state: any) => state.counter.value);
-  const data = useSelector((state: any) => state.counter.allData);
-  console.log(count, "count", data);
+  // const data = useSelector((state: any) => state.counter.allData);
+  const GET_DOGS = gql`
+  query GetDogs {
+    dogs {
+      id
+      breed
+    }
+  }
+`;
+// const { loading, error, data } = useQuery(GET_DOGS);
+
   const [formData, setFormData] = useState({
     mobileNo: "",
     address: "",
@@ -29,6 +40,16 @@ const Home = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     console.log(formData);
   };
+  const query = `
+  query {
+    firstName:"amit"
+    lastName:"sudra"
+  }
+`;
+  const apiCall=async()=>{
+    const gra=await axios.post("/api/graphql",{query})
+    console.log(gra,"dddd")
+  }
   return (
     <>
       <div className="p-4">
@@ -38,6 +59,12 @@ const Home = () => {
           className="bg-blue-500 text-white py-2 px-4 rounded"
         >
           Increment
+        </button>
+        <button
+          onClick={() => apiCall()}
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          GraphQl API
         </button>
         <br />
         <button
